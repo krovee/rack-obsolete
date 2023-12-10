@@ -1,0 +1,11 @@
+# Build/Binaries directories.
+\Build\
+\Binaries\
+
+# UserData directory for temp files.
+\UserData\
+
+# All garbage files.
+*.exe
+*.pdb
+*.xml

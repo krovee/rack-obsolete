@@ -1,0 +1,24 @@
+
+   ######                          #######                               
+   #     #   ##    ####  #    #    #       #    #  ####  # #    # ###### 
+   #     #  #  #  #    # #   #     #       ##   # #    # # ##   # #      
+   ######  #    # #      ####      #####   # #  # #      # # #  # #####  
+   #   #   ###### #      #  #      #       #  # # #  ### # #  # # #      
+   #    #  #    # #    # #   #     #       #   ## #    # # #   ## #      
+   #     # #    #  ####  #    #    ####### #    #  ####  # #    # ###### 
+                                                                      
+###########################################################################
+###########################################################################
+###########################################################################
+
+ChangeLog starts from initial commit (12/10/23)
+
++ [12/10/23 :: 1]:  Congratulation! Today is the birthday of my game engine! 
+                    And plans are so wide! For example, my goals are to make
+                    PBR materials by default in-engine, GI lighting, semi-RT
+                    reflections, cool water simulation, post-processing efx,
+                    integration of Bullet physics library, OpenAL audio, net
+                    stack (tcp+udp), rich file IO, full control over memory 
+                    consumption, integrated scripting language (i.e. python)
+
++ [XX/10/23 :: 2]: ...
