@@ -20,5 +20,12 @@ ChangeLog starts from initial commit (12/10/23)
                     integration of Bullet physics library, OpenAL audio, net
                     stack (tcp+udp), rich file IO, full control over memory 
                     consumption, integrated scripting language (i.e. python)
+                    
++ [12/10/23 :: 2]:	Starting with Windows-only solution based on 
+					Visual Studio Solution. Project's split into 
+					'RackEngine' & '3rd-party' solution directories. A first 
+					one contains engine-related code (engine library + 
+					executable). Second one responsible on any other software 
+					used by engine side (i.e.> libffmpeg, openal, etc..)
 
-+ [XX/10/23 :: 2]: ...
++ [MM/DD/YY :: N]: ...

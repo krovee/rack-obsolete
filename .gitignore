@@ -6,6 +6,26 @@
 \UserData\
 
 # All garbage files.
-*.exe
-*.pdb
-*.xml
+**.exe
+**.dll
+**.exp
+**.lib
+**.recipe
+**.iobj
+**.ipdb
+**.ilk
+**.log
+**.CopyComplete
+**.FileListAbsolute.txt
+**.pdb
+**.xml
+**.tlog
+**.lastbuildstate
+**.idb
+**.obj
+**.ipch
+**.opendb
+**.db
+**.suo
+**.db-wal
+**.db-shm
