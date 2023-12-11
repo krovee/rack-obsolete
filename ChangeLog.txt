@@ -28,4 +28,10 @@ ChangeLog starts from initial commit (12/10/23)
 					executable). Second one responsible on any other software 
 					used by engine side (i.e.> libffmpeg, openal, etc..)
 
++ [12/11/23 :: 3]:	Started memory subsystem with simple stack_memory_provider 
+					for small stack-based memory allocations; fixed_heap_memory_provider 
+					for large but fixed by size memory allocations; all derived 
+					from 'basic_memory_provider' interface. Done basic memory manager 
+					for simple centralized interface to allocate a memory!
+
 + [MM/DD/YY :: N]: ...
