@@ -9,17 +9,69 @@
 
 #include <RE/Core/Exports.h>
 #include <cstdint>
+#include <type_traits>
+#include <new>
 
 namespace re {
+	/*
+	* re::align_by(n, alignment)
+	* Utility function that aligns any  *n*  number by  *alignment*  value.
+	*/
 	constexpr size_t align_by(size_t const& n, size_t const& align = sizeof(size_t)) {
 		return (n + align - 1) & ~(align - 1);
 	}
 }
 
 namespace re::low_level {
+	/*
+	* re::low_level::memset(block, byte, bytes)
+	* Common for low level programming function that writes  *byte*  
+	* at certain memory block which starts at  *block*  and lengths
+	* for  *bytes*  .
+	*/
 	void*	memset(void* block, std::int8_t byte, size_t const& bytes) noexcept;
+	/*
+	* re::low_level::memcopy(block, source, bytes)
+	* Common for low level programming function that copies all data
+	* from  *source*  memory location to  *block*  destination for  *bytes*  .
+	*/
 	void*	memcopy(void* block, const void* source, size_t const& bytes) noexcept;
+	/*
+	* re::low_level::memcompare(blocka, blockb, bytes)
+	* Compares blocks of memory byte-by-byte for length of  *bytes*  .
+	*/
 	int		memcompare(const void* blocka, const void* blockb, size_t const& bytes) noexcept;
+
+	/*
+	* class re::low_level::oac<Ty, AllocT> {};
+	* Simple but useful utility class which helps to allocate object with 
+	* given allocator reference and constructs it with a given arguments.
+	*/
+	template<class Ty, class AllocT>
+	class oac {
+	public:
+		template<class...Args>
+		inline oac(AllocT& alloc, Ty& r, Args&&...args) noexcept {
+			constexpr auto size = std::is_pointer_v<Ty> ? sizeof(std::remove_pointer_t<Ty>) : sizeof(Ty);
+			r = reinterpret_cast<Ty>(alloc.allocate(size));
+			new (r) Ty(std::forward<Args>(args)...);
+		}
+	};
+
+	/* class re::low_level::oad<Ty, AllocT> {};
+	* Works exactly opposite to oac<Ty, AllocT> and calls destructor for
+	* an object (if destructible) and deallocates it by given allocator.
+	*/
+	template<class Ty, class AllocT>
+	class oad {
+	public:
+		inline oad(AllocT& alloc, Ty& r) noexcept {
+			if constexpr (!std::is_pointer_v<Ty> && std::is_destructible_v<Ty> && std::is_constructible_v<Ty>) {
+				r->~Ty();
+			}
+			alloc.deallocate(r);
+		}
+	};
 
 	/*
 	* enum class AllocationTag {};
@@ -48,16 +100,30 @@ namespace re::low_level {
 	class memory_manager;
 
 	/*
-	* 
+	* class re::low_level::memory_allocations_tracker {};
+	* Utility class to centralize all allocations records and track
+	* memory usage using collected data.
 	*/
 	class memory_allocations_tracker {
 	public:
 		/*
-		* 
+		* struct re::low_level::memory_allocations_tracker::record {};
+		* Container for information related to allocation for a certain 
+		* allocation tag (kind).
 		*/
 		struct record {
+			/*
+			* Currently allocated amount of bytes.
+			*/
 			size_t current_allocated = {};
+			/*
+			* Max ever allocated memory by the engine.
+			*/
 			size_t max_allocated = {};
+			/*
+			* Maximum provided (initialized) by the engine memory
+			* area for a certain allocation tag (kind).
+			*/
 			size_t reserved = {};
 		};
 
@@ -100,18 +166,55 @@ namespace re::low_level {
 	};
 
 	/*
+	* class re::low_level::memory_manager {};
+	* Main utility class to control over different allocations
+	* in one place, but this approach is basically TEMPORAL!!!
+	* TODO(krovee): 
+	*	replace memory_manager class with more flexible solution!
 	*/
 	class memory_manager {
 	public:
 		memory_manager() noexcept;
 		virtual ~memory_manager() noexcept;
 
+		/*
+		* Allocates requested amount of memory and terminates
+		* it with NULL-terminator as buf[length] = 0;
+		*/
 		char* allocate_string(size_t const& length) noexcept;
+		/*
+		* Pretty self-explainatory method, destroys a valid string.
+		* [What-Is-A-Valid-String-Here?]:
+		*	So, you can't pass here with whatever string 
+		*	you want, because even every basic_memory_provider
+		*	derived provider has it's own unique internals
+		*	that is incompatible with each other, and it
+		*	means given string here - is allocated through
+		*	allocate_string(length)!
+		*/
 		void deallocate_string(char* str) noexcept;
 
+		/*
+		* Allocate pretty common chunk of memory with  *length* .
+		*/
 		void* allocate(size_t const& length) noexcept;
+		/*
+		* Deallocate a valid memory pointer.
+		* [What-Is-A-Valid-MemPointer-Here?]:
+		*	So, you can't pass here with whatever pointer
+		*	you want, because even every basic_memory_provider
+		*	derived provider has it's own unique internals
+		*	that is incompatible with each other, and it
+		*	means given pointer here - is allocated through
+		*	allocate(length)!
+		*/
 		void deallocate(void* block) noexcept;
 
+		/*
+		* Check if every requested to initialize provider
+		* did it successfully.
+		*/
+		bool is_valid() const noexcept;
 	private:
 		static void on_allocate(allocation_tag tag, size_t const& bytes) noexcept;
 		static void on_deallocate(allocation_tag tag, size_t const& bytes) noexcept;
@@ -139,7 +242,10 @@ namespace re::low_level {
 		* stack_memory_provider::deallocate(mem_block)
 		*/
 		void	deallocate(void* mem_block) noexcept override;
-
+		/*
+		* stack_memory_provider::get_block_size(mem_block)
+		* Returns size of allocated memory block.
+		*/
 		static size_t get_block_size(void* mem_block) noexcept;
 	private:
 		struct allocation_header {
@@ -177,7 +283,10 @@ namespace re::low_level {
 		* fixed_heap_memory_provider::deallocate(mem_block)
 		*/
 		void	deallocate(void* mem_block) noexcept override;
-
+		/*
+		* fixed_heap_memory_provider::get_block_size(mem_block)
+		* Returns size of allocated memory block.
+		*/
 		static size_t get_block_size(void* mem_block) noexcept;
 	private:
 		struct heap_block {
@@ -222,7 +331,7 @@ namespace re::low_level {
 		const auto address = allocated + real_bytes;
 		// in case of 0==bytes we pretty much OK, because in this case
 		// function will return pointer to last allocated memory. (> mb a hack?)
-		if (address >= BYTES_CAPACITY) {
+		if (address >= raw_capacity) {
 			// ok, we're out of memory!
 			return nullptr;
 		}

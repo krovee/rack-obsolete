@@ -33,5 +33,14 @@ ChangeLog starts from initial commit (12/10/23)
 					for large but fixed by size memory allocations; all derived 
 					from 'basic_memory_provider' interface. Done basic memory manager 
 					for simple centralized interface to allocate a memory!
+					
++ [12/13/23 :: 4]:	So implemented a couple of things to form a core's bare bones 
+					and define a structure of engine's startup process. Created small 
+					minimal mathmatecal vector classes in MVectors.h; Also done some 
+					refactoring on source code directory structure: now /Sources/ 
+					subdirectory mirrors /Include/'s directory structure to not confuse 
+					where to put/look for a specitic source file, corresponding to 
+					certain header. Extra: enabled AVX2 instructions on project's 
+					settings (which made simd a requirement for the engine).
 
-+ [MM/DD/YY :: N]: ...
++ [MM/DD/YY :: N]:	...

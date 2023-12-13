@@ -56,6 +56,11 @@ namespace re::low_level {
 		on_deallocate(allocation_tag::other, size);
 		basic_alloc->deallocate(block);
 	}
+	bool memory_manager::is_valid() const noexcept {
+		return 
+			providers[get_tag_index(allocation_tag::other)]
+		&&	providers[get_tag_index(allocation_tag::string)];
+	}
 	void memory_manager::on_allocate(allocation_tag tag, size_t const& bytes) noexcept {
 		auto& rec = memory_tracker.records[get_tag_index(tag)];
 		rec.current_allocated += bytes;

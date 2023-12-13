@@ -11,13 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\RE\ADT\Flags.h" />
+    <ClInclude Include="Include\RE\Core\Algorithms.h" />
     <ClInclude Include="Include\RE\Core\Exports.h" />
     <ClInclude Include="Include\RE\Core\Memory.h" />
+    <ClInclude Include="Include\RE\Core\MVectors.h" />
+    <ClInclude Include="Include\RE\RT\Engine\RawBuffer.h" />
+    <ClInclude Include="Include\RE\RT\Engine\State.h" />
+    <ClInclude Include="Include\RE\RT\Graphics\DesktopWindow.h" />
     <ClInclude Include="Include\RE\RT\Starter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sources\Core__Memory.cpp" />
-    <ClCompile Include="Sources\RT__Starter.cpp" />
+    <ClCompile Include="Sources\Core\Algorithms.cpp" />
+    <ClCompile Include="Sources\Core\Memory.cpp" />
+    <ClCompile Include="Sources\RT\Engine\State.cpp" />
+    <ClCompile Include="Sources\RT\Starter.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -82,6 +90,9 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +113,9 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
