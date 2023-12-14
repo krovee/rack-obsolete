@@ -56,5 +56,10 @@ ChangeLog starts from initial commit (12/10/23)
 					in order to create proper foundation beforehand and expand codebase to provide 
 					maybe a better desktop window solution. Code is tested and works well as expected, 
 					but won't be used for some time. 
+					
++ [12/14/23 :: 7]:	Now 'Dev' and 'Optimize' builds lives in a separate directories 
+					'Binaries-Dev' and 'Binaries-Optimize' as is. 
+					This is done to organize this libraries-mess 
+					in 'Binaries' directory when multiple targets built.
 
 + [MM/DD/YY :: N]:	...

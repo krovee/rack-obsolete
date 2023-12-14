@@ -47,15 +47,15 @@
     <LinkIncremental>true</LinkIncremental>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
     <IncludePath>$(SolutionDir)RE\Include;$(IncludePath)</IncludePath>
-    <OutDir>..\..\Binaries\</OutDir>
+    <OutDir>..\..\Binaries-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\$(ProjectName)\</IntDir>
-    <TargetName>$(ProjectName)d</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Optimized|x64'">
     <LinkIncremental>false</LinkIncremental>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
     <IncludePath>$(SolutionDir)RE\Include;$(IncludePath)</IncludePath>
-    <OutDir>..\..\Binaries\</OutDir>
+    <OutDir>..\..\Binaries-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
