@@ -48,5 +48,13 @@ ChangeLog starts from initial commit (12/10/23)
 					default value in constructor and check flag value with equals operator (==). 
 					And low_level::oac and low_level::oad classes were tweaked and fixed too, 
 					now they're works only on pointers (which are nullptred by default).
+					
++ [12/14/23 :: 6]:	"Now engine have a window class! But it's too far.." What am I talking about? 
+					There's a list of tons of features and classes and tech that should (and *MUST*) 
+					be added before very first engine's window will be created and displayed. 
+					So that, the class re::desktop_window will not be used for a quite some time 
+					in order to create proper foundation beforehand and expand codebase to provide 
+					maybe a better desktop window solution. Code is tested and works well as expected, 
+					but won't be used for some time. 
 
 + [MM/DD/YY :: N]:	...

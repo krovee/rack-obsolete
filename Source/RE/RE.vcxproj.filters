@@ -56,5 +56,8 @@
     <ClCompile Include="Sources\RT\Engine\State.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\RT\Graphics\DesktopWindow_Win32.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

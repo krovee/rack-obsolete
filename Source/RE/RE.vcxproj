@@ -25,6 +25,7 @@
     <ClCompile Include="Sources\Core\Algorithms.cpp" />
     <ClCompile Include="Sources\Core\Memory.cpp" />
     <ClCompile Include="Sources\RT\Engine\State.cpp" />
+    <ClCompile Include="Sources\RT\Graphics\DesktopWindow_Win32.cpp" />
     <ClCompile Include="Sources\RT\Starter.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
