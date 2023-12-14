@@ -50,11 +50,26 @@ namespace re::low_level {
 	template<class Ty, class AllocT>
 	class oac {
 	public:
-		template<class...Args>
-		inline oac(AllocT& alloc, Ty& r, Args&&...args) noexcept {
+		template<class...Args, std::enable_if_t<std::is_pointer_v<Ty>, int> = 0>
+		inline oac(AllocT& alloc, Ty& p, Args&&...args) noexcept {
+			// acquire required size to allocate (to fit object)
 			constexpr auto size = std::is_pointer_v<Ty> ? sizeof(std::remove_pointer_t<Ty>) : sizeof(Ty);
-			r = reinterpret_cast<Ty>(alloc.allocate(size));
-			new (r) Ty(std::forward<Args>(args)...);
+			// allocate enough memory
+			p = reinterpret_cast<Ty>(alloc.allocate(size));
+			// remove pointer extent since Ty is pointer by default
+			using TyNonPointer = std::remove_pointer_t<Ty>;
+			// HACK(krovee):	in order to not to loose pointer to object,
+			//					we should keep it in some temp place.
+			auto tmp = p;
+			// construct object with parameters (if required)
+			if constexpr (std::is_constructible_v<TyNonPointer>) {
+				new (p) TyNonPointer(std::forward<Args>(args)...);
+			}
+			// HACK(krovee):	if pointer to object is lost somehow,
+			//					all we need to do is to get it back.
+			if (p != tmp) {
+				p = tmp;
+			}
 		}
 	};
 
@@ -65,9 +80,12 @@ namespace re::low_level {
 	template<class Ty, class AllocT>
 	class oad {
 	public:
+		template<std::enable_if_t<std::is_pointer_v<Ty>, int> = 0>
 		inline oad(AllocT& alloc, Ty& r) noexcept {
-			if constexpr (!std::is_pointer_v<Ty> && std::is_destructible_v<Ty> && std::is_constructible_v<Ty>) {
-				r->~Ty();
+			if constexpr (std::is_destructible_v<std::remove_pointer_t<Ty>>) {
+				// remove pointer extent since Ty is pointer by default
+				using TyNonPointer = std::remove_pointer_t<Ty>;
+				r->~TyNonPointer();
 			}
 			alloc.deallocate(r);
 		}

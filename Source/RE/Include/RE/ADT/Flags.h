@@ -21,6 +21,10 @@ namespace re::adt {
 		constexpr flags_view() noexcept = default;
 				 ~flags_view() noexcept = default;
 
+		constexpr flags_view(FlagType initial) noexcept {
+			_bits[initial] = true;
+		}
+
 		/*
 		* Toggles ENABLED a certain  *flag*  .
 		*/
@@ -38,6 +42,10 @@ namespace re::adt {
 		*/
 		inline void reset() noexcept {
 			low_level::memset(_bits, 0, NumFlags);
+		}
+
+		inline bool operator==(FlagType f) const noexcept {
+			return _bits[f];
 		}
 
 	private:

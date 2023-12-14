@@ -42,5 +42,11 @@ ChangeLog starts from initial commit (12/10/23)
 					where to put/look for a specitic source file, corresponding to 
 					certain header. Extra: enabled AVX2 instructions on project's 
 					settings (which made simd a requirement for the engine).
+					
++ [12/14/23 :: 5]:	Added a couple of extensions to vec<4> in order to access elements 
+					by smaller vector sizes. Also tweaked class adt::flags_view to accept 
+					default value in constructor and check flag value with equals operator (==). 
+					And low_level::oac and low_level::oad classes were tweaked and fixed too, 
+					now they're works only on pointers (which are nullptred by default).
 
 + [MM/DD/YY :: N]:	...

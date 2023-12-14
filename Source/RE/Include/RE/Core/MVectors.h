@@ -135,8 +135,13 @@ namespace re::math {
 			};
 			struct {
 				float u;
-				float v;
-				float s;
+				union {
+					struct {
+						float v;
+						float s;
+					};
+					vec<2> yz;
+				};
 				float t;
 			};
 			struct {
@@ -144,6 +149,10 @@ namespace re::math {
 				std::int32_t iy;
 				std::int32_t iz;
 				std::int32_t iw;
+			};
+			struct {
+				vec<2> xy;
+				vec<2> zw;
 			};
 			float			farray[4];
 			std::int32_t	iarray[4];
@@ -153,97 +162,97 @@ namespace re::math {
 	using vec2 = vec<2>;
 	using vec4 = vec<4>;
 
-	vec<2> operator+(vec<2> const& a, vec<2> const& b) noexcept {
+	static inline vec<2> operator+(vec<2> const& a, vec<2> const& b) noexcept {
 		return {
 			a.farray[0] + b.farray[0],
 			a.farray[1] + b.farray[1]
 		};
 	}
-	vec<2> operator+(vec<2> const& a, float f) noexcept {
+	static inline vec<2> operator+(vec<2> const& a, float f) noexcept {
 		return {
 			a.farray[0] + f,
 			a.farray[1] + f
 		};
 	}
-	vec<2> operator+(float f, vec<2> const& b) noexcept {
+	static inline vec<2> operator+(float f, vec<2> const& b) noexcept {
 		return {
 			b.farray[0] + f,
 			b.farray[1] + f
 		};
 	}
-	vec<2> operator-(vec<2> const& a, vec<2> const& b) noexcept {
+	static inline vec<2> operator-(vec<2> const& a, vec<2> const& b) noexcept {
 		return {
 			a.farray[0] - b.farray[0],
 			a.farray[1] - b.farray[1]
 		};
 	}
-	vec<2> operator-(vec<2> const& a, float f) noexcept {
+	static inline vec<2> operator-(vec<2> const& a, float f) noexcept {
 		return {
 			f - a.farray[0],
 			f - a.farray[1]
 		};
 	}
-	vec<2> operator-(float f, vec<2> const& b) noexcept {
+	static inline vec<2> operator-(float f, vec<2> const& b) noexcept {
 		return {
 			f - b.farray[0],
 			f - b.farray[1]
 		};
 	}
-	vec<2> operator*(vec<2> const& a, vec<2> const& b) noexcept {
+	static inline vec<2> operator*(vec<2> const& a, vec<2> const& b) noexcept {
 		return {
 			a.farray[0] * b.farray[0],
 			a.farray[1] * b.farray[1]
 		};
 	}
-	vec<2> operator*(vec<2> const& a, float f) noexcept {
+	static inline vec<2> operator*(vec<2> const& a, float f) noexcept {
 		return {
 			f * a.farray[0],
 			f * a.farray[1]
 		};
 	}
-	vec<2> operator*(float f, vec<2> const& b) noexcept {
+	static inline vec<2> operator*(float f, vec<2> const& b) noexcept {
 		return {
 			f * b.farray[0],
 			f * b.farray[1]
 		};
 	}
-	vec<2> operator/(vec<2> const& a, vec<2> const& b) noexcept {
+	static inline vec<2> operator/(vec<2> const& a, vec<2> const& b) noexcept {
 		return {
 			a.farray[0] / b.farray[0],
 			a.farray[1] / b.farray[1]
 		};
 	}
-	vec<2> operator/(vec<2> const& a, float f) noexcept {
+	static inline vec<2> operator/(vec<2> const& a, float f) noexcept {
 		return {
 			a.farray[0] / f,
 			a.farray[1] / f
 		};
 	}
-	vec<2> operator/(float f, vec<2> const& b) noexcept {
+	static inline vec<2> operator/(float f, vec<2> const& b) noexcept {
 		return {
 			f / b.farray[0],
 			f / b.farray[1]
 		};
 	}
-	vec<2> operator%(vec<2> const& a, vec<2> const& b) noexcept {
+	static inline vec<2> operator%(vec<2> const& a, vec<2> const& b) noexcept {
 		return {
 			a.iarray[0] % b.iarray[0],
 			a.iarray[1] % b.iarray[1]
 		};
 	}
-	vec<2> operator%(vec<2> const& a, std::int32_t i) noexcept {
+	static inline vec<2> operator%(vec<2> const& a, std::int32_t i) noexcept {
 		return {
 			a.iarray[0] % i,
 			a.iarray[1] % i
 		};
 	}
-	vec<2> operator%(std::int32_t i, vec<2> const& b) noexcept {
+	static inline vec<2> operator%(std::int32_t i, vec<2> const& b) noexcept {
 		return {
 			i % b.iarray[0],
 			i % b.iarray[1]
 		};
 	}
-	vec<4> operator+(vec<4> const& a, vec<4> const& b) noexcept {
+	static inline vec<4> operator+(vec<4> const& a, vec<4> const& b) noexcept {
 		return {
 			a.farray[0] + b.farray[0],
 			a.farray[1] + b.farray[1],
@@ -251,7 +260,7 @@ namespace re::math {
 			a.farray[3] + b.farray[3]
 		};
 	}
-	vec<4> operator+(vec<4> const& a, float f) noexcept {
+	static inline vec<4> operator+(vec<4> const& a, float f) noexcept {
 		return {
 			a.farray[0] + f,
 			a.farray[1] + f,
@@ -259,7 +268,7 @@ namespace re::math {
 			a.farray[3] + f
 		};
 	}
-	vec<4> operator+(float f, vec<4> const& b) noexcept {
+	static inline vec<4> operator+(float f, vec<4> const& b) noexcept {
 		return {
 			b.farray[0] + f,
 			b.farray[1] + f,
@@ -267,7 +276,7 @@ namespace re::math {
 			b.farray[3] + f
 		};
 	}
-	vec<4> operator-(vec<4> const& a, vec<4> const& b) noexcept {
+	static inline vec<4> operator-(vec<4> const& a, vec<4> const& b) noexcept {
 		return {
 			a.farray[0] - b.farray[0],
 			a.farray[1] - b.farray[1],
@@ -275,7 +284,7 @@ namespace re::math {
 			a.farray[3] - b.farray[3]
 		};
 	}
-	vec<4> operator-(vec<4> const& a, float f) noexcept {
+	static inline vec<4> operator-(vec<4> const& a, float f) noexcept {
 		return {
 			f - a.farray[0],
 			f - a.farray[1],
@@ -283,7 +292,7 @@ namespace re::math {
 			f - a.farray[3]
 		};
 	}
-	vec<4> operator-(float f, vec<4> const& b) noexcept {
+	static inline vec<4> operator-(float f, vec<4> const& b) noexcept {
 		return {
 			f - b.farray[0],
 			f - b.farray[1],
@@ -291,7 +300,7 @@ namespace re::math {
 			f - b.farray[3]
 		};
 	}
-	vec<4> operator*(vec<4> const& a, vec<4> const& b) noexcept {
+	static inline vec<4> operator*(vec<4> const& a, vec<4> const& b) noexcept {
 		return {
 			a.farray[0] * b.farray[0],
 			a.farray[1] * b.farray[1],
@@ -299,7 +308,7 @@ namespace re::math {
 			a.farray[3] * b.farray[3]
 		};
 	}
-	vec<4> operator*(vec<4> const& a, float f) noexcept {
+	static inline vec<4> operator*(vec<4> const& a, float f) noexcept {
 		return {
 			f * a.farray[0],
 			f * a.farray[1],
@@ -307,7 +316,7 @@ namespace re::math {
 			f * a.farray[3]
 		};
 	}
-	vec<4> operator*(float f, vec<4> const& b) noexcept {
+	static inline vec<4> operator*(float f, vec<4> const& b) noexcept {
 		return {
 			f * b.farray[0],
 			f * b.farray[1],
@@ -315,7 +324,7 @@ namespace re::math {
 			f * b.farray[3]
 		};
 	}
-	vec<4> operator/(vec<4> const& a, vec<4> const& b) noexcept {
+	static inline vec<4> operator/(vec<4> const& a, vec<4> const& b) noexcept {
 		return {
 			a.farray[0] / b.farray[0],
 			a.farray[1] / b.farray[1],
@@ -323,7 +332,7 @@ namespace re::math {
 			a.farray[3] / b.farray[3]
 		};
 	}
-	vec<4> operator/(vec<4> const& a, float f) noexcept {
+	static inline vec<4> operator/(vec<4> const& a, float f) noexcept {
 		return {
 			a.farray[0] / f,
 			a.farray[1] / f,
@@ -331,7 +340,7 @@ namespace re::math {
 			a.farray[3] / f
 		};
 	}
-	vec<4> operator/(float f, vec<4> const& b) noexcept {
+	static inline vec<4> operator/(float f, vec<4> const& b) noexcept {
 		return {
 			f / b.farray[0],
 			f / b.farray[1],
@@ -339,7 +348,7 @@ namespace re::math {
 			f / b.farray[3]
 		};
 	}
-	vec<4> operator%(vec<4> const& a, vec<4> const& b) noexcept {
+	static inline vec<4> operator%(vec<4> const& a, vec<4> const& b) noexcept {
 		return {
 			a.iarray[0] % b.iarray[0],
 			a.iarray[1] % b.iarray[1],
@@ -347,7 +356,7 @@ namespace re::math {
 			a.iarray[3] % b.iarray[3]
 		};
 	}
-	vec<4> operator%(vec<4> const& a, std::int32_t i) noexcept {
+	static inline vec<4> operator%(vec<4> const& a, std::int32_t i) noexcept {
 		return {
 			a.iarray[0] % i,
 			a.iarray[1] % i,
@@ -355,7 +364,7 @@ namespace re::math {
 			a.iarray[3] % i
 		};
 	}
-	vec<4> operator%(std::int32_t i, vec<4> const& b) noexcept {
+	static inline vec<4> operator%(std::int32_t i, vec<4> const& b) noexcept {
 		return {
 			i % b.iarray[0],
 			i % b.iarray[1],
