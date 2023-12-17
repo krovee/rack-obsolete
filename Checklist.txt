@@ -21,10 +21,13 @@ Legend:
  -> Core
 	[O] Basic primitive types
 	[X] Basic thread representation
+	[O] Memory allocators (updates)
+	[X] JSON file format parser/serializer
 	-> Algorithms 
 		[O] Simple bytes count (strlen-like)
 		[X] Some small set of search algorithms
-		[X] Hashing routines
+		[O] Hashing routines
+		[X] Base64 decode/encode routines
 		[X] ...?
 
 	-> Math 
@@ -63,6 +66,7 @@ Legend:
 		[X] Sync/Async InputOutput
 		[X] Virtual Filesystem (VFS)
 		[X] Compression routines for vary of data types
+		[X] Image coding routines
 		[X] Media encoder/decoder (ffmpeg)
 		[X] ...?
 	
